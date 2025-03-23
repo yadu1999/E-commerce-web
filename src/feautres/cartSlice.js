@@ -30,7 +30,6 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      console.log("uuuu")
       toast.success("Your product was added successfully");
       let find = state.cart.findIndex((item) => item.id === action.payload.id);
       if (find >= 0) {
@@ -84,6 +83,13 @@ const cartSlice = createSlice({
     filterCategory: (state, action) => {
       state.product = state.items.filter((item) => item.category === action.payload);
     },
+
+    // Add the clearCart action
+    clearCart: (state) => {
+      state.cart = []; // Empty the cart
+      state.totalQuantity = 0; // Reset total quantity
+      state.totalPrice = 0; // Reset total price
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(loadProducts.fulfilled, (state, action) => {
@@ -94,6 +100,7 @@ const cartSlice = createSlice({
 
 export const {
   addToCart,
+  clearCart,
   getCartTotal,
   removeFromCart,
   increaseItemQuantity,
